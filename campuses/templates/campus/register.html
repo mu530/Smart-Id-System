@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Cafe Form{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='campuses' %}
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Campus:list' %}">Campuses</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>Register</a></li>
+    </ol>
+  </nav>
+</div>
+<div class="container my-3 py-3">
+
+  <div class="border-orange p-3 m-3">
+    <form method="POST" action=''>
+      {% csrf_token %}
+      <fieldset class=" p-3 m-2">
+        <legend class="badge bg-orange p-3 fs-5">Department Form</legend>
+        {{ department_form | crispy }}
+      </fieldset>
+      <div class="d-md-flex justify-content-md-end">
+        <button name="department_submit" type="submit" class="btn btn-blue">Submit</button>
+      </div>
+    </form> 
+  </div>
+
+  <div class="border-orange p-3 m-3">
+    <form method="POST" action=''>
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <fieldset class="border-brown p-3 m-2">
+          <legend class="badge bg-orange p-3 fs-5">Cumpus Form</legend>
+            {{ campus_form | crispy }}
+          </fieldset>
+        </div>
+        <div class="col-lg-6">
+          <fieldset class='border-brown p-3 m-2'>
+            <legend class="badge bg-orange p-3 fs-5">Cumpus's Address Form</legend>
+              {{ address_form | crispy }}
+          </fieldset>
+        </div>
+      </div>
+      <div class="d-md-flex justify-content-md-end">
+        <button name="campus_submit" type="submit" class="btn btn-blue">Submit</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+      
+
+
+
+{% include 'base/footer.html' %}
+
+{% endblock %}

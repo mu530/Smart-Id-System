@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='students' %}
+
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Student:student_list' %}">Students</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Register</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-sm my-3 py-3">
+
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <fieldset class="border-orange p-3 m-2">
+        <legend class="badge bg-orange p-3 fs-5">1 Student details</legend>
+        {{ student_form | crispy }}
+      </fieldset>
+      </div>
+      <div class="col-lg-6">
+        <fieldset class='border-orange p-3 m-2'>
+          <legend class="badge bg-orange p-3 fs-5">2 Student Address Form</legend>
+            {{ student_address_form | crispy }}
+        </fieldset>
+      </div>
+    </div>
+  
+
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <fieldset class='border-orange p-3 m-2'>
+          <legend class="badge bg-orange p-3 fs-5">3 Emergency Form</legend>
+            {{ emergency_form | crispy }}
+        </fieldset>
+      </div>
+      <div class="col-lg-6">
+        <fieldset class='border-orange p-3 m-2'>
+          <legend class="badge bg-orange p-3 fs-5">4 Emergency Person Address</legend>
+            {{ emergency_address_form | crispy }}
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="row"><button name="submit" class="btn btn-outline-brown" type="submit">Register</button></div>
+
+
+  </form>
+
+</div>
+
+
+{% include 'base/footer.html'%}
+
+
+{% endblock %}

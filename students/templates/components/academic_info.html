@@ -1,0 +1,9 @@
+<div class="border-orange profile-container m-2 p-3">
+  <div class="">
+      <p class="h4 text-blue"><i class="fa-solid fa-graduation-cap"></i> Academic Information</p>
+      <p class="text-normal"><strong>Department:</strong> {{ student.department }}</p>
+      <p class="text-normal"><strong>Financial Aid:</strong> {% if student.financial_aid %}Yes{% else %}No{% endif %}</p>
+      <p class="text-normal"><strong>Cafeteria User:</strong> {% if student.is_cafe_user %}Yes{% else %}No{% endif %}</p>
+      <p class="text-normal"><strong>Student Associative:</strong> {% if student.is_student_associative %}Yes{% else %}No{% endif %}</p>
+  </div>
+</div>

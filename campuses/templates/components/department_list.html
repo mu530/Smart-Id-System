@@ -1,0 +1,47 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue"><i class="fa-solid fa-clipboard-user"></i> Departments</p></div>
+  <div class="ms-auto">
+    <a href="{% url 'Campus:register'%}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a> 
+  </div>
+</div>
+
+{% if departments %}
+
+<div class="p-3">
+  <form method="GET p-3">
+      {{department_filter.form|crispy}}
+      <button class='btn btn-orange' type='submit'>Search</button>
+  </form>
+</div>
+
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Name</a></th>
+      <th><a href="?order_by=department" class="text-white">Number of Students</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for department in departments %}
+    <tr>
+      <td> 
+        <div class="ms-3">
+          <p class="fw-bold mb-1">{{department.name}}</p>
+          <p class="mb-0">  {{department.name_am}}</p>
+        </div>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{department.students.count}}</p>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+<p>no department registered</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=departments %}

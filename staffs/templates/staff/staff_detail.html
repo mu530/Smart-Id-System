@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'staff/css/staff.css' %}">
+{% endblock style %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='staffs' %}
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Staff:staff_list' %}">Staffs</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{staff.username}}</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container">
+
+  <h2>{{staff.username}}</h2>
+  {% include "components/staff_profile.html" %}
+</div>
+{% include 'base/footer.html' %}
+{%endblock%}

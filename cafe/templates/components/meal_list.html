@@ -1,0 +1,96 @@
+{% load static %} 
+{% load crispy_forms_tags %}
+
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue"><i class="fa-solid fa-mug-hot"></i> Meal Periods</p></div>
+  <div class="ms-auto">
+    <a href="{% url "Cafe:add_meal" %}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a> 
+  </div>
+</div>
+
+{% if meal_periods %}
+<div class="p-3">
+  <form method="GET">
+      {{meal_period_filter.form|crispy}}
+      <button class='btn btn-orange' type='submit' name='filter_cafe_users'>ፈልግ Search </button>
+  </form>
+</div>
+
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Name</a></th>
+      <th><a href="?order_by=department" class="text-white">ቀነ ገደብ</a></th>
+      <th>ሰዓት ገደብ </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for meal in meal_periods %}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          <div class="ms-3">
+            <a href="{{ student.get_absolute_url }}" class="text-normal">
+              <p class="mb-0">  {{meal.meal_period_am}}</p>
+              <p class="fw-bold mb-1">{{meal.meal_period}}</p>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="mb-0">  {{meal.start_day}} - {{meal.end_day}}</p>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{meal.start_time}} - {{meal.end_time}}</p>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="stud{{student.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+            ሥራ Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="studentIDD{{student.pk}}">
+            <li><a href="{% url 'Cafe:service' meal.id %}" class="dropdown-item">ጀምር Start</a></li>
+            <li><a href="{% url 'Cafe:update_meal' meal.id %}" class="dropdown-item">አስተካክል Update</a></li>
+            <li>
+              <a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#bookReturn_{{borrower.id}}" id="return" data-bs-id="{{ book.id }}">
+                ሰርዝ ( Delete )
+              </a>
+            </li>
+          </ul>
+        </div>
+      </td>
+      <!-- Return Modal -->
+      <div class="modal fade" id="bookReturn_{{borrower.id}}" tabindex="-1" aria-labelledby="bookReturn_{{borrower.id}}Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bookReturn_{{borrower.id}}Label">{{ meal.meal_period_am }} {{ meal.meal_period }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal_body">
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" value="{{meal.id}}" name="meal_id"/>
+              አርግጠኛ {{ meal.meal_period_am }} ይሰረዝ?
+              Are you shure you want to delete {{ meal.meal_period }}
+              <div>
+                <button type="button" class="btn btn-blue" data-bs-dismiss="modal">አቋርጥ ( No )</button>
+                <button type="submit" class="btn btn-brown" name="delete_period">አዎ ( Yes )</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no student borrows book</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=meal_periods %}
+
+
+

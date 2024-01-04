@@ -1,0 +1,41 @@
+<div class="border-orange m-2 p-3">
+  <div class="">
+    <div class="hstack gap-3">
+      <div><p class="h4 text-blue"><i class="fa-solid fa-laptop"></i> Devices</p></div>
+      <div class="ms-auto">
+        {% if request.user.is_superuser %}
+          <a href="{% url 'Student:new_device' student.id %}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if devices %}
+    <table class="align-middle mb-0">
+      <thead class="bg-blue">
+        <tr>
+          <th>Type</th>
+          <th>Model</th>
+          <th>Serial number</th>
+          <th>Date registered</th>
+        </tr>
+      </thead>
+      <tbody>
+    
+        {% for device in devices %}
+        <tr>
+            <td>{{ device.device_type }}</td>
+            <td>{{ device.device_model }}</td>
+            <td>{{ device.serial_number }}</td>
+            <td>{{ device.date_added|date:'F j y' }}</td>
+        </tr>
+        {% endfor %}
+    
+      </tbody>
+    </table>
+    {% else %}
+    <p class="d-block">no device registered</p>
+    {% endif %}
+    
+  </div>
+</div>
+

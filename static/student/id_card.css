@@ -1,0 +1,62 @@
+
+.id-container { 
+  box-sizing: border-box; 
+  width: 410px; 
+  height: 260px; 
+  padding: 10px; 
+  border: 2px solid rgba(64, 84, 178, 0.5); 
+  background-image: linear-gradient(to bottom, #4054B2, #ffb606); 
+  overflow: hidden; 
+  display: grid; 
+  grid-template-rows: 60px auto ; 
+  grid-template-columns: auto auto; 
+} 
+
+.id-header { 
+  grid-row: 1 / span 1; 
+  grid-column: 1 / span 2; 
+  display: flex; 
+  align-items: center; 
+} 
+
+
+.id-header img { 
+  width: 50px; 
+  height: auto;
+} 
+
+.id-barcode { 
+  width: 100px; 
+  height: 60px; 
+} 
+
+.id-img-container { 
+  grid-row: 2 / span 1; 
+  grid-column: 1 / span 1; 
+}
+
+.id-img { 
+  width: 100px; 
+  height: 100px; 
+} 
+
+.student-data { 
+  grid-row: 2 / span 1; 
+  grid-column: 2 / span 1; 
+  color: white; 
+}
+
+.title {
+  color: #fff;
+  font-size: 30px;
+}
+
+@media print {
+footer {
+  display: none;
+}
+.no-print * {
+  display: none;
+}
+
+}

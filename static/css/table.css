@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+  margin: 3px;
+  padding: 5px;
+}
+
+th, td >* {
+  padding: 7px 10px 10px 10px;
+}
+
+th {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 90%;
+  text-align: left;
+  color: #fff;
+}
+
+td {
+  font-size: 90%;
+  border-bottom: 2px solid #B53105;
+  text-align: left;
+  color: #000;
+  height: 80px; 
+}
+
+tr:hover {
+  background-color: #6a7ccb;
+  color: #ffffff;
+} 
+

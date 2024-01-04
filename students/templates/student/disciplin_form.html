@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='students' %}
+
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Student:student_list' %}">Students</a></li>
+      <li class="breadcrumb-item"><a href="{{ student.get_absolute_url }}">{{ student.full_name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Discipline</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-sm my-3 py-3">
+
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="border-brown p-3 m-2">
+      <legend class="badge bg-brown p-3 fs-5">{{ student.full_name}}'s Discipline Record</legend>
+      {{ form | crispy }}
+    </fieldset>
+
+    <div class="row"><button name="submit" class="btn btn-outline-brown" type="submit">Add</button></div>
+
+  </form>
+
+</div>
+
+
+{% include 'base/footer.html'%}
+
+
+{% endblock %}

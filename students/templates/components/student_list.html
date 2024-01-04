@@ -1,0 +1,67 @@
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue">Students</p></div>
+  <div class="ms-auto">
+    <a href="{% url "Student:register" %}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a> 
+  </div>
+</div>
+{% if students %}
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Name</a></th>
+      <th>ID number</th>
+      <th><a href="?order_by=department" class="text-white">Department | Campus</a></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          {% if student.photo %} 
+            <img
+              src="{{ student.photo.url }}"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle"
+            />
+          {% endif %}
+          <div class="ms-3">
+            <a href="{{ student.get_absolute_url }}" class="text-normal">
+              <p class="fw-bold mb-1">{{student.full_name}}</p>
+              <p class="mb-0">  {{student.full_name_am}}</p>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="mb-0">  {{student.student_id}}</p>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{student.department}}</p>
+        <p class="fw-normal m-0">{{student.department.campus}}</p>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="stud{{student.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="studentIDD{{student.pk}}">
+            {% if request.user.is_superuser %}
+              <li><a href="{% url 'Student:profile_update' student.id %}" class="dropdown-item">Update</a></li>
+            {% endif %}
+            <li><a href="{{ student.get_absolute_url }}" class="dropdown-item">See Profile</a></li>
+            <li><a href="{% url 'Student:add_disciplin' student.id %}" class="dropdown-item">Add Disciplinary Recored</a></li>
+            <li><a href="{% url 'Student:id_card' student.id %}" class="dropdown-item">ID Card</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no student registered</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=students %}

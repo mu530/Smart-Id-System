@@ -1,0 +1,24 @@
+<div class="border-orange p-3 m-2 profile-container row">
+
+  <p class="h4 text-blue"><i class="fa-solid fa-user-graduate"> student profile</i></p>
+  <div class="col-md-4 profile-img">
+      <img src="{{ student.photo.url }}" alt="Student Photo" style="max-width: 120%; height: auto;">
+  </div>
+  <div class="col-md-5">
+    <p class="text-normal"><strong>ሙሉ ሥም:</strong> {{ student.full_name_am }}</p>
+    <p class="text-normal"><strong>Full Name:</strong> {{ student.full_name }}</p>
+    <p class="text-normal"><strong>Student ID:</strong> {{ student.student_id }}</p>
+    <p class="text-normal"><strong>Email:</strong><a class="text-decoration-none text-dark" href="mailto:{{ student.address.email }}"> {{ student.address.email }}</a> </p>
+    <p class="text-normal"><strong>Phone Number:</strong><a class="text-decoration-none text-dark" href="tel:{{ student.address.phone_number }}">{{ student.address.phone_number }}</a> </p>
+    <p class="text-normal"><strong>Address:</strong> {{ student.address }}</p>
+    <p class="text-normal"><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+    <p class="text-normal"><strong>Gender:</strong> {{ student.get_gender_display }}</p>
+    <p class="text-normal"><strong>Government ID Number:</strong> {{ student.government_id_number }}</p>
+    <p class="text-normal"><strong>Age:</strong> {{ student.age }}</p>
+    <p class="text-normal"><strong>Registered At:</strong> {{ student.registration_date }}</p>
+  </div>
+  <div class="col-md-3 profile-img">
+    <img src="{{ student.qr_code.url }}" alt="Student QR Code" style="max-width: 50%; height: auto;"> 
+  </div>
+
+</div>

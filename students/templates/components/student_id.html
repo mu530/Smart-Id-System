@@ -1,0 +1,46 @@
+{% load static %}
+{% if student %}
+  <div class="container row justify-content-center">
+    <div class="col-lg-6 m-3">
+      <div class="id-container" id="id-container">
+        <div class="id-header">
+          <img class="id-logo" src="{% static 'image/logo.png' %}" alt="{{company.name}}">
+          <p class="title">&nbsp University of Gondar</p>
+        </div> <div class="id-img-container">
+          <img class="id-img" src="{{ student.photo.url }}" alt="{{student.username}}">
+        </div>
+        <div class="student-data">
+          <p>Name: {{student.full_name}}</p>
+          <p>ሥም፡ {{student.full_name_am}}</p>
+          <p>Department: {{student.department}}</p>
+          <p>Student ID: {{student.student_id}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-6 m-3">
+      <div class="id-container" id="id-container">
+        <div class="id-header">
+          <img class="id-logo" src="{% static 'image/logo.png' %}" alt="{{company.name}}">
+          <p class="title">&nbsp University of Gondar</p>
+        </div> 
+        <div class="id-img-container">
+          <img class="id-img d-block" src="{{ student.qr_code.url }}" alt="{{student.username}}">
+          
+        </div>
+        <div class="student-data">
+          <p>Name: {{student.full_name}}</p>
+          <p>ሥም፡ {{student.full_name_am}}</p>
+          <p>Department: {{student.department}}</p>
+          <p>Student ID: {{student.student_id}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="m-2 no-print">
+      <button class="btn btn-blue" onclick="print()">Print Card</button>
+    </div>
+
+  </div>
+{% else %}
+no Sutudet with that id Found
+{% endif %}

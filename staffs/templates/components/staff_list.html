@@ -1,0 +1,50 @@
+{% if staffs %}
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=name" class="text-white">Name</a></th>
+      <th>email</th>
+      <th><a href="?order_by=role" class="text-white">Role</a></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for staff in staffs %}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          {% if staff.photo %} 
+            <img
+              src="{{ staff.photo.url }}"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle"
+            />
+          {% endif %}
+          <div class="ms-3">
+            <a href="{{ staff.get_absolute_url }}" class="text-normal">
+              <p class="fw-bold mb-1">{{staff.get_fullname}}</p>
+              <p class="mb-0">  {{staff.username}}</p>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <a href="mailto:{{staff.email}}" class="text-normal">{{staff.email}}</a>
+      </td>
+      <td>
+        <span class="fw-normal mb-1">{{staff.role}}</span>
+      </td>
+      <td>
+        <a href="{% url 'Staff:staff_update' staff.id %}" class="btn btn-rounded btn-sm text-orange fw-bold">
+          Edit
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no staff registered</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=staffs %}

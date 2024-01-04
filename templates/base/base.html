@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}University of Gondar{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/all.min.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "css/table.css" %}" />
+  <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
+
+  {% block style %}{% endblock style %}
+</head>
+<body class='w-100'>
+
+  {% block content %}
+  {% endblock %}
+  
+</body>
+{% block javascripts %}{% endblock javascripts %}
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</html>

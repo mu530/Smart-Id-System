@@ -1,0 +1,68 @@
+{% load staff_filter %}
+<nav class="navbar navbar-expand-lg bg-blue p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand text-orange" href="{% url 'Staff:home' %}"><i class="fa-solid fa-address-card"></i> UoG ID_system</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-align-justify text-orange"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+              {% with user=request.user %}
+                  {% if user.is_superuser %}
+                      <li class="nav-item"><a class="nav-link px-3 {% if active_tab == 'staffs' %}  bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Staff:staff_list' %}">Staffs</a></li>
+                      <li class="nav-item"><a class="nav-link px-3 {% if active_tab == 'students' %}  bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Student:student_list' %}">Students</a></li>
+                      <li class="nav-item"><a class="nav-link px-3 {% if active_tab == 'campuses' %}  bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Campus:list' %}">Campus</a></li>
+                  {% endif %}
+                  {% if user.is_superuser or user|user_role:"is_cafe_staff" %}
+                      <li class="nav-item"><a class="nav-link px-3{% if active_tab == 'cafe' %}  bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Cafe:home' %}">Cafeteria</a></li>
+                  {% endif %}
+                  {% if user.is_superuser or user|user_role:"is_librarist" %}
+                      <li class="nav-item"><a class="nav-link px-3{% if active_tab == 'library' %}   bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Library:home' %}">Library</a></li>
+                  {% endif %}
+                  {% comment %} <li class="nav-item"><a class="nav-link px-3{% if active_tab == 'disciplin' %}   bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Student:student_list' %}">Disciplinary</a></li> {% endcomment %}
+                  <li class="nav-item">
+                      <a class="nav-link px-3{% if active_tab == 'about' %}   bg-orange  {% else %}  {% endif %} text-white font-weight-bold " href="{% url 'Staff:about' %}">About</a>
+                  </li>
+                  <li class="nav-item"><a class="nav-link text-white" href="{% url 'Staff:logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a></li>
+              {% endwith %}
+          {% else %}
+              <li class="nav-item"><a class="nav-link text-white" href="{% url 'Staff:login' %}">Login <i class="fas fa-sign-in-alt"></i></a></li>
+          {% endif %}
+      </ul>
+  </div>
+  </div>
+</nav>
+  <div class="div">
+    
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
+          <div class="text-brown fw-bold">
+            <i class="fa-solid fa-triangle-exclamation text-brown"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-primary alert-dismissible d-flex align-items-center" role="alert">
+          <div>
+            <i class="fa-solid fa-circle-check"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" name="select_meal"></button>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+  </div>
+  

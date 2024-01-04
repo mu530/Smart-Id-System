@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}UoG Staffs{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% include 'base/header.html' with active_tab='library' %}
+
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+
+<div class="container-lg">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>Library</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-lg">
+
+  <div class="">
+    {% include 'components/books_list.html' %}
+  </div>
+  <div class="">
+    {% include 'components/borrowers_list.html' %}
+  </div>
+
+</div>
+{% include 'base/footer.html' %}
+{% endblock content %}

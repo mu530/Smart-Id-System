@@ -1,0 +1,88 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue"><i class="fa-solid fa-book"></i> Books</p></div>
+  <div class="ms-auto">
+    <a href="{% url 'Library:register_book'%}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a> 
+  </div>
+</div>
+
+<div class="p-3">
+  <form method="GET p-3">
+      {{book_filter.form|crispy}}
+      <button class='btn btn-orange' type='submit'>Search</button>
+  </form>
+</div>
+
+{% if books %}
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Title</a></th>
+      <th>Author</th>
+      <th>Number of copies</th>
+      <th>Left</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>
+        <p class="fw-bold mb-1">{{book.title}}</p>
+      </td>
+      <td>
+        <p class="mb-0">  {{book.author}}</p>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{book.total_number}}</p>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{book.books_left}}</p>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="stud{{student.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="studentIDD{{student.pk}}">
+            <li>
+              <a type="button" class="dropdown-item {% if book.books_left == 0 %}disabled{% endif %} " data-bs-toggle="modal" data-bs-target="#bookRent_{{book.id}}" data-bs-id="{{ book.id }}">
+                አውስ ( Rent )
+              </a>
+            </li>
+            <li><a href="{{book.get_absolute_url}}" class="dropdown-item">Update</a></li>
+          </ul>
+        </div>
+      </td>
+      
+      <!-- Rent Modal -->
+      <div class="modal fade" id="bookRent_{{book.id}}" tabindex="-1" aria-labelledby="bookRent_{{book.id}}Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bookRent_{{book.id}}Label">Rent {{ book.title }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+            <form  id="rentForm_{{book.id}}"  action="" method="POST">
+              {% csrf_token %}
+              {{ rent_form | crispy }}
+              <input type="hidden" name="book" value="{{book.id}}">
+              <button class="btn btn-blue" name="book_rent">Rent</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no book available</p>
+{% endif %}
+
+{% include 'base/pagination.html' with page_obj=books %}

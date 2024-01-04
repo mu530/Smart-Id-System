@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}UoG Staffs{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% include 'base/header.html' with active_tab='cafe' %}
+
+{% include 'base/side_bar.html' with active_tab='cafe' %}
+
+
+<div class="container-lg">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>Cafe</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-lg">
+
+  <div class="">
+    {% include "components/meal_list.html" %}
+  </div>
+  
+</div>
+{% include 'base/footer.html' %}
+{% endblock content %}

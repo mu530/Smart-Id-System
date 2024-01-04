@@ -1,0 +1,11 @@
+<div class="border-orange profile-container m-2 p-3">
+
+      <div>
+        <p class="h4 text-blue"><i class="fa-solid fa-address-book"></i> Emergency Contacts</p>
+        <p class="card-text"><strong>Name:</strong> {{ student.emergency.full_name }} {% if student.emergency.full_name_am %} ( {{ student.emergency.full_name_am }} ) {% endif %}</p>
+        <p class="card-text"><strong>Relationship:</strong> {{ student.emergency.relationship }} {% if student.emergency.relationship_am %} ( {{ student.emergency.relationship_am }} ) {% endif %}</p>
+        <p class="card-text"><strong>Phone Number:</strong> <a href="tel:{{ student.emergency.address.phone_number }}" class="text-decoration-none text-dark"> +251{{ student.emergency.address.phone_number }} </a></p>
+        <p class="card-text"><strong>Address:</strong> {{ student.emergency.address }}</p>
+      </div>
+
+</div>

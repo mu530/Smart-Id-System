@@ -1,0 +1,59 @@
+
+
+<a class="btn text-blue bg-orange p-2 mb-2 d-inline" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+  <i class="fa-solid fa-angles-right mb-2"></i>
+</a>
+
+<div class="offcanvas offcanvas-start bg-blue" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header bg-orange">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Student ID</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    {% if active_tab == 'staffs' %}
+    <ul class="navbar-nav">
+      <p class="text-white fw-bold">Staff</p>
+      <li class="nav-item"><a href='{% url "Staff:staff_list" %}' class="nav-link text-white">List Staffs</a></li>
+      <li class="nav-item"><a href='{% url "Staff:register" %}' class="nav-link text-white">Create Staff Account</a></li>
+      
+      <p class="text-white fw-bold">Department</p>
+      <li class="nav-item"><a href='{% url "Campus:register" %}' class="nav-link text-white">Add Department and campus</a></li>
+      <li class="nav-item"><a href='{% url "Campus:list" %}' class="nav-link text-white">Show Departments and campuses</a></li>
+      
+      <p class="text-white fw-bold">Student</p>
+      <li class="nav-item"><a href="{% url 'Student:student_list' %}" class="nav-link text-white">List Students</a></li>
+      <li class="nav-item"><a href="{% url 'Student:register' %}" class="nav-link text-white">Register Student</a></li>
+    </ul>
+
+  {% elif active_tab == 'student' %}
+  <ul class="navbar-nav">
+      
+      <p class="text-white fw-bold">Student</p>
+      <li class="nav-item"><a href="{% url 'Student:student_list' %}" class="nav-link text-white">List Students</a></li>
+      <li class="nav-item"><a href="{% url 'Student:register' %}" class="nav-link text-white">Register Student</a></li>
+      
+      <p class="text-white fw-bold">Department</p>
+      <li class="nav-item"><a href='{% url "Campus:register" %}' class="nav-link text-white">Add Department and campus</a></li>
+      <li class="nav-item"><a href='{% url "Campus:list" %}' class="nav-link text-white">Show Departments and campuses</a></li>
+
+      <p class="text-white fw-bold">Cafe</p>
+      <li class="nav-item"><a href='{% url "Cafe:home" %}' class="nav-link text-white">Meal Program</a></li>
+      <li class="nav-item"><a href='{% url "Cafe:add_meal" %}' class="nav-link text-white">Add new meal Program</a></li>
+    </ul>
+
+  {% elif active_tab == 'cafe' %}
+    <ul class="navbar-nav">
+      <p class="text-white fw-bold">Cafe</p>
+      <li class="nav-item"><a href='{% url "Cafe:home" %}' class="nav-link text-white">Meal Program</a></li>
+      <li class="nav-item"><a href='{% url "Cafe:add_meal" %}' class="nav-link text-white">Add new meal Program</a></li>
+    </ul>
+
+  {% elif active_tab == 'library' %}
+    <ul class="navbar-nav">
+      <p class="text-white fw-bold">Library</p>
+      <li class="nav-item"><a href='#' class="nav-link text-white">Book Rent</a></li>
+      <li class="nav-item"><a href='#' class="nav-link text-white">New Book</a></li>
+    </ul>
+  {% endif %}
+  </div>
+</div>

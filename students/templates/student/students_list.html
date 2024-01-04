@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}UoG Staffs{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% include 'base/header.html' with active_tab='students' %}
+
+{% include 'base/side_bar.html' with active_tab='staffs' %}
+
+
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>Students</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-lg-1 d-lg-block d-md-none"></div>
+
+    <div class="d-lg-none d-sm-block d-block bg-blue text-white p-0">
+      <a class="d-block bg-orange text-white fw-bold p-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <div class="hstack gap-3">
+          <div>Filter</div>
+          <div class="ms-auto">
+            <i class="fa-solid fa-align-justify text-white"></i>
+          </div>
+        </div>
+      </a>
+      <div class="collapse" id="collapseExample">  
+        <form method="GET" class='p-2'>
+          {{student_filter.form|crispy}}
+          <button class='btn btn-orange' type='submit'>Search</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-12 col-12">
+      {% include 'components/student_list.html' %}
+    </div>
+    <div class="col-lg-3 col-md-4 d-lg-block d-sm-none d-none bg-blue text-white p-0 mb-2">
+      <div class='bg-orange p-3'>
+        Filter
+      </div>
+
+      <div class='p-4'>
+        <form method="GET">
+          {{student_filter.form|crispy}}
+          <button class='btn btn-orange' type='submit'>Search</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% include 'base/footer.html' %}
+{% endblock content %}

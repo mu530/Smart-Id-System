@@ -1,0 +1,24 @@
+
+
+<div class="profile-container row bg-orange">
+  <div class="col-md-4 profile-img">
+    <img src="{{ staff.photo.url }}" alt="{{staff.username}}">
+  </div>
+  <div class="col-md-8 text-white">
+    {% if staff.get_fullname %}
+      <p>Name: {{staff.get_fullname}}</p>
+    {% endif %}
+    {% if staff.get_fullname_am %}
+      <p>ሥም፡ {{staff.get_fullname_am}}</p>
+    {% endif %}
+    <p>username: {{staff.username}}</p>
+    {% if staff.email %}
+      <p>Email: {{staff.email}}</p>
+    {% endif %}
+    <p>Role: {{staff.role}}</p>
+    <a href="{% url 'Staff:staff_update' staff.id %}" class="btn btn-rounded text-blue fw-bold">
+          Edit
+        </a>
+  </div>
+</div>
+

@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Department List{% endblock %}
+
+{% block content %}
+  {% include 'base/header.html' with active_tab='campuses' %}
+  {% include 'base/side_bar.html' with active_tab='staffs' %}
+
+<div class="container-lg">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>Campuses</a></li>
+    </ol>
+  </nav>
+</div>
+
+  <div class="container-lg">
+   {% include "components/campus_list.html" %}
+   {% include "components/department_list.html" %}
+  </div>
+  {% include 'base/footer.html' %}
+{% endblock %}

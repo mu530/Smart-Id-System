@@ -1,0 +1,107 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue"><i class="fa-solid fa-user"></i></i> Students</p></div>
+</div>
+
+<div class="p-3">
+  <form method="GET p-3">
+      {{borrower_filter.form|crispy}}
+      <button class='btn btn-orange' type='submit'>Search</button>
+  </form>
+</div>
+
+
+{% if borrowers %}
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Name</a></th>
+      <th>ID number</th>
+      <th class="d-lg-block d-sm-none d-none"><a href="?order_by=department" class="text-white">Department | Campus</a></th>
+      <th>Book</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for borrower in borrowers %}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          {% if borrower.student.photo %} 
+            <img
+              src="{{ borrower.student.photo.url }}"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle"
+            />
+          {% endif %}
+          <div class="ms-3">
+            <a href="{{ borrower.student.get_absolute_url }}" class="text-normal">
+              <p class="fw-bold mb-1">{{borrower.student.full_name}}</p>
+              <p class="mb-0">  {{borrower.student.full_name_am}}</p>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="mb-0">  {{borrower.student.student_id}}</p>
+      </td>
+      <td class="d-lg-block d-sm-none d-none">
+        <p class="fw-normal m-0">{{borrower.student.department}}</p>
+        <p class="fw-normal m-0">{{borrower.student.department.campus}}</p>
+      </td>
+      <td>
+        <p class="fw-normal m-0">{{borrower.book.title}}</p>
+        <p class="fw-normal m-0">By: {{borrower.book.author}}</p>
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="stud{{student.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="studentIDD{{student.pk}}">
+            <li>
+              <a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#bookReturn_{{borrower.id}}" id="return" data-bs-id="{{ book.id }}">
+                መልሷል ( Return )
+              </a>
+            </li>
+            <li><a href="{% url 'Student:add_disciplin' borrower.student.id %}" class="dropdown-item">Add Disciplinary Recored</a></li>
+            <li><a href="{% url 'Student:id_card' borrower.student.id %}" class="dropdown-item">ID Card</a></li>
+          </ul>
+        </div>
+      </td>
+      <!-- Return Modal -->
+      <div class="modal fade" id="bookReturn_{{borrower.id}}" tabindex="-1" aria-labelledby="bookReturn_{{borrower.id}}Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bookReturn_{{borrower.id}}Label">Return {{ borrow.id }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal_body">
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" value="{{borrower.id}}" name="id"/>
+              did the student return the book?
+              <div>
+                <button type="button" class="btn btn-blue" data-bs-dismiss="modal">አልመለሰም ( No )</button>
+                <button type="submit" class="btn btn-brown" name="book_return">አዎ ( Yes )</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no student borrows book</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=borrowers %}
+
+
+

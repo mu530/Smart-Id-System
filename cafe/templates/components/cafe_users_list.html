@@ -1,0 +1,92 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="hstack gap-3">
+  <div><p class="h4 text-blue"><i class="fa-solid fa-user"></i></i> Students</p></div>
+</div>
+
+{% if cafe_users %}
+<div class="p-3">
+  <form method="POST">
+      {% csrf_token %}
+      {{cafe_users_filter.form|crispy}}
+      <button class='btn btn-orange' type='submit' name='filter_cafe_users'>ፈልግ Search </button>
+  </form>
+</div>
+
+<table class="align-middle mb-0">
+  <thead class="bg-blue">
+    <tr>
+      <th><a href="?order_by=first_name" class="text-white">Name</a></th>
+      <th>ID number</th>
+      <th class="d-lg-block d-sm-none d-none"><a href="?order_by=department" class="text-white">Department | Campus</a></th>
+      <th>በልቷል Has eaten</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cafe_user in cafe_users %}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          {% if cafe_user.student.photo %} 
+            <img
+              src="{{ cafe_user.student.photo.url }}"
+              alt=""
+              style="width: 45px; height: 45px"
+              class="rounded-circle d-lg-block d-none"
+            />
+          {% endif %}
+          <div class="ms-3">
+            <a href="{{ cafe_user.student.get_absolute_url }}" class="text-normal">
+              <p class="fw-bold mb-1">{{cafe_user.student.full_name}}</p>
+              <p class="mb-0">  {{cafe_user.student.full_name_am}}</p>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="mb-0">  {{cafe_user.student.student_id}}</p>
+      </td>
+      <td class="d-lg-block d-sm-none d-none">
+        <p class="fw-normal m-0">{{cafe_user.student.department}}</p>
+        <p class="fw-normal m-0">{{cafe_user.student.department.campus}}</p>
+      </td>
+      <td>
+        {% if cafe_user.has_eaten %}
+        <p class="fw-normal m-0"><i class="fa-solid fa-circle-check text-blue"></i></p>
+        {% else %}
+        <p class="fw-normal m-0"><i class="fa-solid fa-circle-xmark text-brown"></i></p>
+        {% endif %}
+      </td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="stud{{cafe_user.student.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="studentIDD{{cafe_user.student.pk}}">
+            <li>
+              <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ cafe_user.id }}" name="meal_card_id"/>
+                {{ student.full_name }}
+                {{ student.full_name_am }} 
+                <div>
+                  <button type="submit" class="dropdown-item {% if cafe_user.has_eaten %}disabled{% endif %}" name="meal_card">በልቷል ( Eat )</button>
+                </div>
+              </form>
+            </li>
+            <li><a href="{% url 'Student:add_disciplin' cafe_user.student.id %}" class="dropdown-item">Add Disciplinary Recored</a></li>
+            <li><a href="{% url 'Student:id_card' cafe_user.student.id %}" class="dropdown-item">ID Card</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>no students</p>
+{% endif %}
+{% include 'base/pagination.html' with page_obj=cafe_users %}
+

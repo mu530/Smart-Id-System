@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='library' %}
+
+{% include 'base/side_bar.html' with active_tab='library' %}
+
+
+{% load crispy_forms_tags %}
+
+<div class="container-lg">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Library:home' %}">Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Register Book</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-lg my-3 py-3">
+
+  <form action="" method="POST">
+    {% csrf_token %}
+
+    <fieldset class="border-orange p-3 m-2">
+      <legend class="badge bg-orange p-3 fs-5">Book</legend>
+      {{ form | crispy }}
+    </fieldset>
+
+    <div class="row"><button name="submit" class="btn btn-outline-blue" type="submit">Save</button></div>
+
+  </form>
+
+</div>
+
+
+{% include 'base/footer.html'%}
+
+
+{% endblock %}

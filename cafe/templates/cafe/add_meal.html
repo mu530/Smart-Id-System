@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Cafe Form{% endblock %}
+
+{% block content %}
+{% include 'base/header.html' with active_tab='cafe' %}
+{% include 'base/side_bar.html' with active_tab='cafe' %}
+
+{% load crispy_forms_tags %}
+
+
+<div class="container-lg">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Cafe:home' %}">meals</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a>manage meal period</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container-lg my-3 py-3">
+
+  <form method="POST" action=''>
+    {% csrf_token %}
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <fieldset class="border-orange p-3 m-2">
+            <legend class="badge bg-orange p-3 fs-5">Meal Periods</legend>
+            {{ meal_form | crispy }}
+            <div class="text-center">
+              <button name="submit" class="btn btn-outline-blue" type="submit">Save</button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </form> 
+  
+</div>  
+
+
+{% include 'base/footer.html'%}
+
+{% endblock %}

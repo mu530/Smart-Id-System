@@ -1,0 +1,52 @@
+
+<div class="border-orange m-2 p-3">
+  <div class="">
+    <div class="hstack gap-3">
+      <div><p class="h4 text-blue"><i class="fa-solid fa-clipboard-user"></i> Disciplinary Records</p></div>
+      <div class="ms-auto">
+        <a href="{% url 'Student:add_disciplin' student.id %}" class="btn btn-blue tetx-white rounded-circle"><i class="fa-solid fa-plus"></i></a> 
+      </div>
+    </div>
+
+    {% if disciplinary_records %}
+      <!-- Display the search form -->
+      <form method="get" action="{% url 'Student:profile' student.student_id %}">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" name="q" value="{{ search_query }}" placeholder="Search disciplinary records">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-secondary">search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+          
+      <table class="align-middle mb-0">
+        <thead class="bg-blue">
+          <tr>
+            <th>Reason</th>
+            <th>Date</th>
+            <th>Staff</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in disciplinary_records %}
+            {% if request.user == record.staff or request.user.is_superuser %}
+            <tr>
+              <td><a class="text-normal" href="{url 'Studdent:update_dis' record.id}">{{ record.reason|safe|truncatechars_html:50 }}</a></td>
+              <td>{{ record.date }}</td>
+              <td><a class="text-normal" href="{{ record.staff.get_absolute_url }}"> {{ record.staff.username }}</a></td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>ምንም መዝገብ የለም ወይም ለእርሶ አልተፈከቀደም </p>
+      <p>No disciplinary records found. or you are not allowed to see</p>
+    {% endif %}
+
+    <!-- Display the pagination links -->
+    {% include 'base/pagination.html' with page_obj=disciplinary_records %}
+  </div>
+</div>
